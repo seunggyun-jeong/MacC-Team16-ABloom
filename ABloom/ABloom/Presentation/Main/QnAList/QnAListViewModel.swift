@@ -62,6 +62,7 @@ final class QnAListViewModel: ObservableObject {
     try? await UserManager.shared.fetchFianceUser()
     viewState = .isProgress
     fetchData()
+    AnswerManager.shared.addSnapshotListenerForMyAnswer()
   }
   
   private func getCurrentUser() {
