@@ -36,13 +36,14 @@ final class QnAListViewModel: ObservableObject {
   
   @Published var fianceAnswers: [DBAnswer]?
   @Published var coupleQnA = [CouplueQnA]()
-    
+  @Published var announcement: DBAnnouncement?
   @Published var viewState: QnAListViewState = .isProgress
 
   @Published var showProfileSheet: Bool = false
   @Published var showQnASheet: Bool = false
   @Published var showCategoryWayPointSheet: Bool = false
-  
+  @Published var showAnnouncementSheet: Bool = false
+
   @Published var selectedQuestion: DBStaticQuestion = DBStaticQuestion(questionID: 0, category: "", content: "")
   
   private var cancellables = Set<AnyCancellable>()
@@ -52,6 +53,7 @@ final class QnAListViewModel: ObservableObject {
       getCurrentUser()
       await getQuestions()
       await getAnswers()
+      await getAnnouncement()
     }
   }
   
@@ -235,5 +237,9 @@ final class QnAListViewModel: ObservableObject {
   
   func tapPlusButton() {
     showCategoryWayPointSheet = true
+  }
+  
+  func getAnnouncement() async {
+    self.announcement = await AnnouncementManager.fetchAnnouncement()
   }
 }
